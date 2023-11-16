@@ -1,6 +1,7 @@
 import fs from "fs";
 import { listContacts } from "./listContacts.js";
 import { contactsPath } from "./contactsPath.js";
+
 export async function updateContacts(contactId, body) {
   const contacts = await listContacts();
   const index = contacts.findIndex((contact) => contact.id === contactId);
