@@ -1,11 +1,15 @@
-import { removeContact } from "#repositiries/removeContact.js";
+import { removeContactMangoDb } from "../../models/contacts.js";
 
-export async function deleteContacts(req, res, next) {
-  const { contactId } = req.params;
-  const isDeleted = await removeContact(contactId);
-  if (isDeleted) {
-    res.status(200).json({ message: "Contact deleted" });
-  } else {
-    res.status(404).json({ message: "Not found" });
+// this controller is using for work with MangoDB
+export const deleteContactMangoDb = async (req, res, next) => {
+  try {
+    const result = await removeContactMangoDb(req.params.contactId);
+    if (result) {
+      res.status(200).json({ message: "Contact deleted" });
+    } else {
+      res.status(404).json({ message: "Not found" });
+    }
+  } catch (err) {
+    next(err);
   }
-}
+};

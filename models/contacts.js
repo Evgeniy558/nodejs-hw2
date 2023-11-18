@@ -1,19 +1,49 @@
-// const fs = require('fs/promises')
+import { Contacts } from "./Contact.js";
 
-const listContacts = async () => {}
+export const addContactMangoDb = async (name, email, phone, favorite) =>
+  Contacts.create({ name, email, phone, favorite });
 
-const getContactById = async (contactId) => {}
+export const listContactsMangoDb = async () => Contacts.find();
 
-const removeContact = async (contactId) => {}
+export const getContactByIdMangoDb = async (contactId) =>
+  Contacts.findById(contactId);
 
-const addContact = async (body) => {}
+export const removeContactMangoDb = async (contactId) => {
+  try {
+    const deletedContact = await Contacts.findOneAndDelete({ _id: contactId });
+    return deletedContact;
+  } catch (err) {
+    throw err;
+  }
+};
 
-const updateContact = async (contactId, body) => {}
+export const updateContactMangoDb = async (contactId, toUpdate) => {
+  try {
+    const updatedContact = await Contacts.findOneAndUpdate(
+      { _id: contactId },
+      toUpdate,
+      {
+        new: true,
+        upsert: true,
+      }
+    );
+    return updatedContact;
+  } catch (err) {
+    throw err;
+  }
+};
 
-module.exports = {
-  listContacts,
-  getContactById,
-  removeContact,
-  addContact,
-  updateContact,
-}
+export const updateStatusContactMangoDb = async (contactId, toUpdate) => {
+  try {
+    const updatedContact = await Contacts.updateOne(
+      { _id: contactId },
+      toUpdate,
+      {
+        new: true,
+      }
+    );
+    return updatedContact;
+  } catch (err) {
+    throw err;
+  }
+};

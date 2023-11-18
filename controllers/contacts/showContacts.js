@@ -1,14 +1,16 @@
-// import express from "express";
-import { getContactsById } from "#repositiries/getContactsById.js";
+import { getContactByIdMangoDb } from "../../models/contacts.js";
 
-// export const router = express.Router();
-
-export async function showContacts(req, res, next) {
-  const { contactId } = req.params;
-  const contact = await getContactsById(contactId);
-  if (contact) {
-    res.status(200).json({ id: contactId, contact });
-  } else {
-    res.status(404).json({ massege: "Not found" });
+// this controller is using for work with MangoDB
+export async function getContactMangoDb(req, res, next) {
+  try {
+    const contact = await getContactByIdMangoDb(req.params.contactId);
+    console.log(contact);
+    if (contact) {
+      res.status(200).json({ ...contact.toObject() });
+    } else {
+      next(); // 404 error
+    }
+  } catch (err) {
+    next(err);
   }
 }
