@@ -1,6 +1,5 @@
-import { listContactsMangoDb } from "../../models/contacts.js";
+import { listContactsMangoDb } from "#modelcontacts/contacts.js";
 
-// this controller is using for work with MangoDB
 export async function getAllTasksMangoDb(req, res, next) {
   try {
     const contacts = await listContactsMangoDb();
@@ -13,3 +12,5 @@ export async function getAllTasksMangoDb(req, res, next) {
     next(err);
   }
 }
+// "#repositiries/addContact.js";
+//   "#repositiries/*": "./repositiries/contacts/*",

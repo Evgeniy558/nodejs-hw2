@@ -8,17 +8,12 @@ import { updateStatusContact } from "#controllers/updateStatusContact.js";
 export const router = express.Router();
 
 router.get("/", getAllTasksMangoDb);
-// router.get("/", indexContacts) - use for work with database on serwer;
 
 router.get("/:contactId", getContactMangoDb);
-// router.get("/:contactId", showContacts); - use for work with database on serwer;
 
 router.post("/", createContactMangoDb);
-// router.post("/", createContacts); - use for work with database on serwer;
 
 router.delete("/:contactId", deleteContactMangoDb);
-
-// router.delete("/:contactId", deleteContacts);- use for work with database on serwer;
 
 router.put("/:contactId", updateContactsMangoDb);
 

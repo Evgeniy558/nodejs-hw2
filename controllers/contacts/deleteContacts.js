@@ -1,6 +1,5 @@
-import { removeContactMangoDb } from "../../models/contacts.js";
+import { removeContactMangoDb } from "#modelcontacts/contacts.js";
 
-// this controller is using for work with MangoDB
 export const deleteContactMangoDb = async (req, res, next) => {
   try {
     const result = await removeContactMangoDb(req.params.contactId);

@@ -1,4 +1,4 @@
-import { updateStatusContactMangoDb } from "../../models/contacts.js";
+import { updateStatusContactMangoDb } from "#modelcontacts/contacts.js";
 
 export const updateStatusContact = async (req, res, next) => {
   const { contactId } = req.params;

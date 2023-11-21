@@ -5,7 +5,8 @@
   "private": true,
   "imports": {
     "#repositiries/*": "./repositiries/contacts/*",
-    "#controllers/*": "./controllers/contacts/*"
+    "#controllers/*": "./controllers/contacts/*",
+    "#modelcontacts/*": "./models/*"
   },
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./server.js",

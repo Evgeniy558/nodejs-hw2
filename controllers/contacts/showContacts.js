@@ -1,6 +1,5 @@
-import { getContactByIdMangoDb } from "../../models/contacts.js";
+import { getContactByIdMangoDb } from "#modelcontacts/contacts.js";
 
-// this controller is using for work with MangoDB
 export async function getContactMangoDb(req, res, next) {
   try {
     const contact = await getContactByIdMangoDb(req.params.contactId);

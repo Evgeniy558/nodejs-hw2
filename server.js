@@ -8,7 +8,7 @@ export const app = express();
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 const { DB_HOST: uriDb } = process.env;
-const connection = mongoose.connect(uriDb); // connection to DB
+const connection = mongoose.connect(uriDb);
 
 app.use(logger(formatsLogger));
 const corsOptions = {
