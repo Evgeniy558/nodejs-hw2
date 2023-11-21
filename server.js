@@ -4,6 +4,8 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import express from "express";
 import { router } from "./routes/api/contacts.js";
+import userRouter from "./routes/api/users.js";
+
 export const app = express();
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
@@ -18,6 +20,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+
+app.use("/users", userRouter);
 
 app.use("/api/contacts", router);
 
