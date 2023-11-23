@@ -2,9 +2,12 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import User from "../../models/users/User.js";
 import Joi from "joi";
+import Jimp from "jimp";
 import "dotenv/config";
 import { getUserbyId } from "../../models/users/users.js";
-
+import gravatar from "gravatar";
+import path from "path";
+import fs from "fs/promises";
 const authRouter = express.Router();
 const secret = process.env.SECRET;
 
@@ -24,13 +27,17 @@ authRouter.post("/signup", async (req, res, next) => {
       return res.status(409).json({ message: "Email in use" });
     }
     try {
-      const newUser = new User({ email });
+      const avatarURL = gravatar.url(email);
+      const newUser = new User({ email, avatarURL });
       await newUser.setPassword(password);
+
       await newUser.save();
+
       res.status(201).json({
         user: {
           email: email,
           subscription: "starter",
+          avatarURL,
         },
       });
     } catch (e) {
@@ -114,4 +121,28 @@ export const getCurrentUser = async (req, res, next) => {
   } catch (err) {
     res.status(500).json("An error occurred while getting the contact: ${err}");
   }
+};
+
+export const updateAvatar = async (req, res, next) => {
+  if (!req.file) {
+    return res.status(400).json({
+      message: "No file uploaded",
+    });
+  }
+  const { path: tmpPath, originalname } = req.file;
+  await Jimp.read(tmpPath)
+    .then((avatar) => {
+      return avatar.resize(250, 250).quality(60).write(tmpPath);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  const fileName = `${req.user._id}_${originalname}`;
+  const uplodedFile = path.join(process.cwd(), "public", "avatars", fileName);
+  await fs.rename(tmpPath, uplodedFile);
+  const avatarURL = path.join("avatars", fileName);
+  await User.findByIdAndUpdate(req.user._id, { avatarURL });
+  res.status(200).json({
+    avatarURL,
+  });
 };

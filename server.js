@@ -25,6 +25,8 @@ app.use("/users", userRouter);
 
 app.use("/api/contacts", router);
 
+app.use(express.static("public"));
+
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
 });
