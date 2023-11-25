@@ -1,7 +1,5 @@
 import multer from "multer";
 import path from "path";
-// const multer = require("multer");
-// const path = require("path");
 const uploadDir = path.join(process.cwd(), "tmp");
 
 const storage = multer.diskStorage({
@@ -19,5 +17,3 @@ const upload = multer({
 });
 
 export const middlewareUploadAvatar = upload.single("avatar");
-
-// module.exports = uploadAvatar;

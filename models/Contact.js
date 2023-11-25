@@ -18,7 +18,7 @@ const contactSchema = new mongoose.Schema(
       default: false,
     },
   },
-  { versionKey: false, timestamps: true } //timestamps - add created and updated time
+  { versionKey: false, timestamps: true }
 );
 
 export const Contacts = mongoose.model("contact", contactSchema, "contacts");

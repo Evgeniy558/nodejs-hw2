@@ -1,11 +1,10 @@
 import express from "express";
-import authRouter, {
-  getCurrentUser,
-  logoutUser,
-  updateAvatar,
-} from "../../controllers/users/authRouter.js";
+import authRouter from "../../controllers/users/authRouter.js";
 import { middlewaresAuth } from "../../middlewares/middlewaresAuth.js";
 import { middlewareUploadAvatar } from "../../middlewares/middlewareUploadAvatar.js";
+import { logoutUser } from "../../controllers/users/logoutUser.js";
+import { getCurrentUser } from "../../controllers/users/getCurrentUser.js";
+import { updateAvatar } from "../../controllers/users/updateAvatar.js";
 
 const router = express.Router();
 
