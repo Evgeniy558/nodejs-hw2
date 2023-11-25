@@ -7,6 +7,8 @@ const authRouter = express.Router();
 const secret = process.env.SECRET;
 import { schemaIsRequired } from "../../validators/users/signupValidator.js";
 import { bodyValidate } from "../../middlewares/validate.js";
+import { uuid } from "uuidv4";
+import { sendEmail } from "../../models/users/sendMail.js";
 
 authRouter.post(
   "/signup",
@@ -19,14 +21,19 @@ authRouter.post(
     }
     try {
       const avatarURL = gravatar.url(email);
-      const newUser = new User({ email, avatarURL });
+      const verificationToken = uuid();
+      const newUser = new User({ email, avatarURL, verificationToken });
       await newUser.setPassword(password);
       await newUser.save();
+
+      await sendEmail(email, verificationToken);
+
       res.status(201).json({
         user: {
           email: email,
           subscription: "starter",
           avatarURL,
+          verificationToken,
         },
       });
     } catch (e) {
@@ -43,7 +50,6 @@ authRouter.post("/login", bodyValidate(schemaIsRequired), async (req, res) => {
   }
   const isPasswordCorrect = await user.validatePassword(password);
   if (isPasswordCorrect) {
-    //token
     const payload = {
       id: user._id,
       email: user.email,
