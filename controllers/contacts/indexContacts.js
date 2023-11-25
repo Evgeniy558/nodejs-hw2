@@ -6,11 +6,9 @@ export async function getAllTasksMangoDb(req, res, next) {
     if (contacts) {
       res.status(200).json({ contacts, itemContacts: contacts.length });
     } else {
-      next(); // 404 error
+      next();
     }
   } catch (err) {
     next(err);
   }
 }
-// "#repositiries/addContact.js";
-//   "#repositiries/*": "./repositiries/contacts/*",

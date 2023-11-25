@@ -7,7 +7,7 @@ export async function getContactMangoDb(req, res, next) {
     if (contact) {
       res.status(200).json({ ...contact.toObject() });
     } else {
-      next(); // 404 error
+      next();
     }
   } catch (err) {
     next(err);
